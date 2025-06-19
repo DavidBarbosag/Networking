@@ -1,6 +1,10 @@
 package com.eci.ARSW.Networking;
 import java.io.*;
 import java.net.*;
+
+/**
+ * Clase que contiene el ejercicio 1 y 2 del taller de networking
+ */
 public class URLReader {
 
     /**
@@ -28,6 +32,11 @@ public class URLReader {
         System.out.println("Ref: " + google.getRef());
     }
 
+    /**
+     * Metodo que recibe una URL, obtiene su .html y lo guarda en un archivo.
+     * @param urlString String que reperesenta una URL
+     * @throws MalformedURLException excepcion para URL mal conformadas
+     */
     public void htmlDownloader(String urlString) throws MalformedURLException {
         URL urltoD = new URL(urlString);
         try{
