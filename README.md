@@ -36,6 +36,27 @@ java -Djava.rmi.server.hostname=localhost -jar target/networking-0.0.1-SNAPSHOT.
 
 **Para la ejecucion correcta se deben tener dos consolas ejecutandose al mismo tiempo, debido al funcionamineto del servicio de chat**
 
+**Terminal 1** 
+
+Ingrese el puerto local para publicar el servicio RMI: → escribe: 1099
+
+Ingrese la IP del usuario remoto: → escribe la IP del usuario B (por ahora puedes poner algo falso como 127.0.0.1 para que quede esperando)
+
+Ingrese el puerto remoto: → 1100
+
+Este usuario se quedará esperando hasta que el otro esté disponible.
+
+**Terminal 2 (Usuario B — cliente que se conecta)**
+
+
+Ingrese el puerto local para publicar el servicio RMI: → 1100
+
+Ingrese la IP del usuario remoto: → 127.0.0.1
+
+Ingrese el puerto remoto: → 1099
+
+Ahora ambos usuarios estarán conectados
+
 ## Funcionalidades
 
 
@@ -66,3 +87,16 @@ Servidor/Cliente UDP (Puerto 4445)
 4. Chat RMI
 * Comunicación P2P
 * Intercambio de mensajes en tiempo real
+
+## Diseño tecnico
+
+* Sockets TCP/UDP: implementados con Socket, ServerSocket, DatagramSocket.
+
+* RMI: usa LocateRegistry, Remote y UnicastRemoteObject.
+
+* Hilos: cada servidor (cuadrado, trigonometría, UDP) corre en un Thread.
+
+* Spring Boot: gestiona el arranque y estructura del proyecto.
+
+* Escáneres (Scanner): usados para entradas dinámicas del usuario.
+
