@@ -84,31 +84,15 @@ public class NetworkingApplication {
 			}
 		}
 
-		// --------- Servidor de Hora (UDP, puerto 4445) ---------
-		Thread udpServerThread = new Thread(new DatagramTimeServer());
-		udpServerThread.start();
 
-		// --------- Cliente de Hora (UDP) ---------
-		Thread udpClientThread = new Thread(new DatagramTimeClient());
-		udpClientThread.start();
-
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		udpClientThread.interrupt();
-		udpServerThread.interrupt();
 
 		// --------- Chat RMI entre pares ---------
 		try {
 			Scanner scanner = new Scanner(System.in);
 
-			// Puerto local para publicar el servicio RMI
 			System.out.print("Ingrese el puerto local para publicar el servicio RMI: ");
 			int localPort = Integer.parseInt(scanner.nextLine());
 
-			// Crear y publicar el objeto remoto en el registro local
 			java.rmi.registry.LocateRegistry.createRegistry(localPort);
 			com.eci.ARSW.Networking.rmi.ChatInterface localChat = new com.eci.ARSW.Networking.rmi.ChatImplementation();
 			java.rmi.registry.Registry localRegistry = java.rmi.registry.LocateRegistry.getRegistry(localPort);
@@ -116,13 +100,11 @@ public class NetworkingApplication {
 
 			System.out.println("Objeto RMI publicado en puerto " + localPort);
 
-			// IP y puerto del usuario remoto
 			System.out.print("Ingrese la IP del usuario remoto: ");
 			String remoteIP = scanner.nextLine();
 			System.out.print("Ingrese el puerto remoto: ");
 			int remotePort = Integer.parseInt(scanner.nextLine());
 
-			// Intentar conectar al otro usuario con reintentos
 			com.eci.ARSW.Networking.rmi.ChatInterface remoteChat = null;
 			while (remoteChat == null) {
 				try {
@@ -136,7 +118,6 @@ public class NetworkingApplication {
 
 			System.out.println("Conectado exitosamente. Escriba sus mensajes (Ctrl+C para salir):");
 
-			// Bucle para enviar mensajes
 			while (true) {
 				String msg = scanner.nextLine();
 				remoteChat.receiveMessage(msg);
