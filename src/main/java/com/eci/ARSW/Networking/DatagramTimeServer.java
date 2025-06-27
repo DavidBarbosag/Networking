@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 public class DatagramTimeServer implements Runnable {
 
     private DatagramSocket socket;
+    private volatile boolean running = true;
 
     public DatagramTimeServer() {
         try {
@@ -22,6 +23,11 @@ public class DatagramTimeServer implements Runnable {
         }
     }
 
+    public void stop() {
+        running = false;
+        socket.close(); // Esto forza que receive() lance IOException
+    }
+
     /**
      * Método que se ejecuta en un hilo separado para escuchar solicitudes de clientes.
      * Cuando recibe un paquete, envía la fecha y hora actual al cliente.
@@ -29,7 +35,7 @@ public class DatagramTimeServer implements Runnable {
     @Override
     public void run() {
         byte[] buf = new byte[256];
-        while (true) {
+        while (running) {
             try {
                 DatagramPacket packet = new DatagramPacket(buf, buf.length);
                 socket.receive(packet);
@@ -46,6 +52,8 @@ public class DatagramTimeServer implements Runnable {
                 break;
             }
         }
-        socket.close();
+        if (socket != null && !socket.isClosed()) {
+            socket.close();
+        }
     }
 }

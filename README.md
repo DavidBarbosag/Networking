@@ -31,7 +31,15 @@ mvn clean install
 Ejecutar la aplicación:
 ```bash
 mvn clen package
+cd Networking
 java -Djava.rmi.server.hostname=localhost -jar target/networking-0.0.1-SNAPSHOT.jar
+```
+
+Ejecutar la prueba de servidor de hora con UDP (Pruebas al Servidor UDP):
+```bash
+mvn clean package
+cd Networking
+java -cp . com.eci.ARSW.Networking.DatagramaTest
 ```
 
 **Para la ejecucion correcta se deben tener dos consolas ejecutandose al mismo tiempo, debido al funcionamineto del servicio de chat**
@@ -100,3 +108,6 @@ Servidor/Cliente UDP (Puerto 4445)
 
 * Escáneres (Scanner): usados para entradas dinámicas del usuario.
 
+## Diagramas de Clases
+
+![Diagrama de Clases](assets/diagramaDeClases.png)
