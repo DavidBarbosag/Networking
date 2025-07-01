@@ -48,7 +48,11 @@ public class DatagramTimeServer implements Runnable {
                 packet = new DatagramPacket(buf, buf.length, address, port);
                 socket.send(packet);
             } catch (IOException ex) {
-                Logger.getLogger(DatagramTimeServer.class.getName()).log(Level.SEVERE, null, ex);
+                if (!running) {
+                    System.out.println(">>> Servidor detenido correctamente.");
+                } else {
+                    Logger.getLogger(DatagramTimeServer.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 break;
             }
         }
